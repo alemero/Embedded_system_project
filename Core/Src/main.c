@@ -73,7 +73,7 @@ int game=0;			// 1=ongoing match 2=user victory 0=not started/user lost
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	if (GPIO_Pin==GPIO_PIN_0){						// if the blue button is pressed it will start the match
 		start=1;
-	}else if(GPIO_Pin==GPIO_PIN_0){					// enable the reset with the button
+	}else if(GPIO_Pin==GPIO_PIN_0){						// enable the reset with the button
 		NVIC_SystemReset();
 	}
 }
@@ -118,7 +118,7 @@ int main(void)
 		int count=0;
 		HAL_UART_Transmit(&huart1,(const uint8_t*)&msg,37,100);					//inform the user of how start playing
 		HAL_UART_Transmit(&huart1,(const uint8_t*)&green,5,100);				//set color of the court green
-		HAL_UART_Transmit(&huart1,(const uint8_t*)&hide_cursor,6,100);			//hide the cursor to make it better
+		HAL_UART_Transmit(&huart1,(const uint8_t*)&hide_cursor,6,100);				//hide the cursor to make it better
 
 		//prematch waiting for the press of the button
 		while (start==0){
@@ -170,7 +170,7 @@ int main(void)
 		  int gamer=14;			//y of the player
 		  int computer=14;		//y of the computer
 		  int i;
-		  int direction=-1; 	//-1=left -2=left-up -3=left-down 1=right 2=right-up 3=right-down
+		  int direction=-1; 		//-1=left -2=left-up -3=left-down 1=right 2=right-up 3=right-down
 		  const char ball='o';
 		  const char space=' ';
 		  const char end_line='\r';
@@ -209,9 +209,9 @@ int main(void)
 				  // changing position of the ball according to the direction of his direction
 				  if (direction==-1){
 					  if (px==0){
-						  game=0;						//the player has missed the ball
+						  game=0;					//the player has missed the ball
 						  break;
-				  }else if(px==1 && campo[py][0]=='|'){ //check the possibility of rebound on the player
+				  }else if(px==1 && campo[py][0]=='|'){				//check the possibility of rebound on the player
 						  if(gamer==py){				//changing direction according on where the player hit the ball
 							  direction=1;
 							  campo[py][px]=ball;
@@ -223,15 +223,15 @@ int main(void)
 							  campo[py][px]=ball;
 						  }
 					  }else{
-						  campo[py][px-1]=ball;			//no rebounds so it moves the ball
+						  campo[py][px-1]=ball;				//no rebounds so it moves the ball
 						  px=px-1;
 					  }
 				  }else if (direction==-2){
 					  if (px==0){
-						  game=0;								//the player has missed the ball
+						  game=0;					//the player has missed the ball
 						  break;
-					  }else if(px==1 && campo[py-1][0]=='|'){	//check the possibility of rebound on the player
-						  if(gamer==py-1){						//changing direction according on where the player hit the ball
+					  }else if(px==1 && campo[py-1][0]=='|'){		//check the possibility of rebound on the player
+						  if(gamer==py-1){				//changing direction according on where the player hit the ball
 							  direction=1;
 							  campo[py][px]=ball;
 						  }else if(gamer==py-2){
@@ -242,21 +242,21 @@ int main(void)
 							  campo[py][px]=ball;
 						  }
 					  }else{
-						  if(campo[py-1][px-1]=='-'){				//if the ball rebound on the upper part of the court it change the direction
+						  if(campo[py-1][px-1]=='-'){			//if the ball rebound on the upper part of the court it change the direction
 							  direction=-3;
 							  campo[py][px]=ball;
 						  }else{
-							  campo[py-1][px-1]=ball;				//no rebounds so it moves the ball
+							  campo[py-1][px-1]=ball;		//no rebounds so it moves the ball
 							  px=px-1;
 							  py=py-1;
 						  }
 					  }
 				  }else if (direction==-3){
 					  if (px==0){
-						  game=0;								//the player has missed the ball
+						  game=0;					//the player has missed the ball
 						  break;
-					  }else if(px==1 && campo[py+1][0]=='|'){	//check the possibility of rebound on the player
-						  if(gamer==py+1){						//changing direction according on where the player hit the ball
+					  }else if(px==1 && campo[py+1][0]=='|'){		//check the possibility of rebound on the player
+						  if(gamer==py+1){				//changing direction according on where the player hit the ball
 							  direction=1;
 							  campo[py][px]=ball;
 						  }else if(gamer==py){
@@ -267,21 +267,21 @@ int main(void)
 							  campo[py][px]=ball;
 						  }
 					  }else{
-						  if(campo[py+1][px-1]=='-'){				//if the ball rebound on the lower part of the court it change the direction
+						  if(campo[py+1][px-1]=='-'){			//if the ball rebound on the lower part of the court it change the direction
 							  direction=-2;
 							  campo[py][px]=ball;
 						  }else{
-							  campo[py+1][px-1]=ball;				//no rebounds so it moves the ball
+							  campo[py+1][px-1]=ball;		//no rebounds so it moves the ball
 							  px=px-1;
 							  py=py+1;
 						  }
 					  }
 				  }else if(direction==1){
 					  if (px==size-1){
-						  game=2;									//the computer has missed the ball
+						  game=2;					//the computer has missed the ball
 						  break;
-					  }else if(px==size-2 && campo[py][size-1]=='|'){ //check the possibility of rebound on the computer
-						  if(computer==py){							//changing direction according on where the computer hit the ball
+					  }else if(px==size-2 && campo[py][size-1]=='|'){ 	//check the possibility of rebound on the computer
+						  if(computer==py){				//changing direction according on where the computer hit the ball
 							  direction=-1;
 							  campo[py][px]=ball;
 						  }else if(computer==py-1){
@@ -292,15 +292,15 @@ int main(void)
 							  campo[py][px]=ball;
 						  }
 					  }else{
-						  campo[py][px+1]=ball;							//no rebounds so it moves the ball
+						  campo[py][px+1]=ball;				//no rebounds so it moves the ball
 						  px=px+1;
 					  }
 				  }else if(direction==2){
 					  if (px==size-1){
-						  game=2;										//the computer has missed the ball
+						  game=2;					//the computer has missed the ball
 						  break;
 					  }else if(px==size-2 && campo[py-1][size-1]=='|'){	//check the possibility of rebound on the computer
-						  if(computer==py-1){							//changing direction according on where the computer hit the ball
+						  if(computer==py-1){				//changing direction according on where the computer hit the ball
 							  direction=-1;
 							  campo[py][px]=ball;
 						  }else if(computer==py-2){
@@ -311,21 +311,21 @@ int main(void)
 							  campo[py][px]=ball;
 						  }
 					  }else{
-						  if(campo[py-1][px+1]=='-'){					//if the ball rebound on the upper part of the court it change the direction
+						  if(campo[py-1][px+1]=='-'){			//if the ball rebound on the upper part of the court it change the direction
 							  direction=3;
 							  campo[py][px]=ball;
 						  }else{
-							  campo[py-1][px+1]=ball;					//no rebounds so it moves the ball
+							  campo[py-1][px+1]=ball;		//no rebounds so it moves the ball
 							  px=px+1;
 							  py=py-1;
 						  }
 					  }
 				  }else if(direction==3){
 					  if (px==size-1){
-						  game=2;										//the computer has missed the ball
+						  game=2;					//the computer has missed the ball
 						  break;
 					  }else if(px==size-2 && campo[py+1][size-1]=='|'){	//check the possibility of rebound on the computer
-						  if(computer==py){								//changing direction according on where the computer hit the ball
+						  if(computer==py){				//changing direction according on where the computer hit the ball
 							  direction=-1;
 							  campo[py][px]=ball;
 						  }else if(computer==py-1){
@@ -336,11 +336,11 @@ int main(void)
 							  campo[py][px]=ball;
 						  }
 					  }else{
-						  if(campo[py+1][px+1]=='-'){					//if the ball rebound on the lower part of the court it change the direction
+						  if(campo[py+1][px+1]=='-'){			//if the ball rebound on the lower part of the court it change the direction
 							  direction=2;
 							  campo[py][px]=ball;
 						  }else{
-							  campo[py+1][px+1]=ball;					//no rebounds so it moves the ball
+							  campo[py+1][px+1]=ball;		//no rebounds so it moves the ball
 							  px=px+1;
 							  py=py+1;
 						  }
@@ -357,7 +357,7 @@ int main(void)
 				  if(MyLinRots[0].p_Data->StateId == TSL_STATEID_DETECT){
 					  if(MyLinRots[0].p_Data->Position >= 5 && MyLinRots[0].p_Data->Position < 50) //if detected the lower part of the bar
 						  {
-						  if(campo[gamer+2][0]==space){			//change position if it is not on the corner
+						  if(campo[gamer+2][0]==space){						//change position if it is not on the corner
 								campo[gamer+2][0]='|';
 								campo[gamer-1][0]=space;
 								gamer++;
@@ -365,7 +365,7 @@ int main(void)
 						  }
 					   if(MyLinRots[0].p_Data->Position >= 80 && MyLinRots[0].p_Data->Position < 120)//if detected the upper part of the bar
 						  {
-						  if(campo[gamer-2][0]==space){			//change position if it is not on the corner
+						  if(campo[gamer-2][0]==space){						//change position if it is not on the corner
 							  campo[gamer-2][0]='|';
 							  campo[gamer+1][0]=space;
 							  gamer=gamer-1;
@@ -379,9 +379,9 @@ int main(void)
 	  }
 	  HAL_UART_Transmit(&huart1,(const uint8_t*)&new_screen,3,100);
 	  if(game==0){
-		  HAL_UART_Transmit(&huart1,(const uint8_t*)&lose,21,100);// user lost
+		  HAL_UART_Transmit(&huart1,(const uint8_t*)&lose,21,100);		// user lost
 	  }else if(game==2){
-		  HAL_UART_Transmit(&huart1,(const uint8_t*)&win,24,100);// user victory
+		  HAL_UART_Transmit(&huart1,(const uint8_t*)&win,24,100);		// user victory
 	  }
   }
   /* USER CODE END 3 */
